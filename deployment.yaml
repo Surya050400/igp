@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abc-tech-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: abc-tech
+  template:
+    metadata:
+      labels:
+        app: abc-tech
+    spec:
+      containers:
+        - name: abc-tech-container
+          image: surya050400/abc_tech:4
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: abc-tech-service
+spec:
+  selector:
+    app: abc-tech
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
